@@ -82,6 +82,78 @@ designSelect.addEventListener("change", updateColorOptions);
 let totalCost = 0;
 
 // Updates the cost every time a different activity is selected
+function updateTotalCost() {
+  const checkboxes = activitiesFieldset.querySelectorAll("input[type='checkbox']");
+  totalCost = 0;
+
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      totalCost += parseInt(checkbox.getAttribute("data-cost"));
+    }
+  });
+
+  totalCostDisplay.textContent = `Total: $${totalCost}`;
+}
+
+const totalCostDisplay = document.createElement("p");
+totalCostDisplay.textContent = "Total: $0"; // Initialize the total cost display
+activitiesFieldset.appendChild(totalCostDisplay);
+
+activitiesFieldset.addEventListener("change", updateTotalCost);
+
+const ccNumInput = document.getElementById("cc-num");
+const zipInput = document.getElementById("zip");
+const cvvInput = document.getElementById("cvv");
+const ccHint = document.getElementById("cc-hint");
+const zipHint = document.getElementById("zip-hint");
+const cvvHint = document.getElementById("cvv-hint");
+
+function validateCreditCard() {
+  const ccNumValid = /^\d{13,16}$/.test(ccNumInput.value);
+  const zipValid = /^\d{5}$/.test(zipInput.value);
+  const cvvValid = /^\d{3}$/.test(cvvInput.value);
+
+  if (!ccNumValid) {
+    ccNumInput.parentElement.classList.add("not-valid");
+  } else {
+    ccNumInput.parentElement.classList.remove("not-valid");
+  }
+
+  if (!zipValid) {
+    zipInput.parentElement.classList.add("not-valid");
+  } else {
+    zipInput.parentElement.classList.remove("not-valid");
+  }
+
+  if (!cvvValid) {
+    cvvInput.parentElement.classList.add("not-valid");
+  } else {
+    cvvInput.parentElement.classList.remove("not-valid");
+  }
+
+  ccHint.style.display = ccNumValid ? "none" : "block";
+  zipHint.style.display = zipValid ? "none" : "block";
+  cvvHint.style.display = cvvValid ? "none" : "block";
+}
+
+ccNumInput.addEventListener("input", validateCreditCard);
+zipInput.addEventListener("input", validateCreditCard);
+cvvInput.addEventListener("input", validateCreditCard);
+
+paymentSelect.value = "credit-card";
+setPaymentSectionVisibility("credit-card");
+
+const checkboxes = activitiesFieldset.querySelectorAll("input[type='checkbox']");
+checkboxes.forEach((checkbox) => {
+  const label = checkbox.parentElement;
+  checkbox.addEventListener("focus", () => {
+    label.classList.add("focus");
+  });
+  checkbox.addEventListener("blur", () => {
+    label.classList.remove("focus");
+  });
+});
+
 // Event Listener for submission
 form.addEventListener("submit", function (event) {
   const nameValid = /^[a-zA-Z\s]+$/.test(nameInput.value);
