@@ -45,7 +45,7 @@ function setPaymentSectionVisibility(selectedPayment) {
 // Updates and gives color options based on the design that is selected
 function updateColorOptions() {
   const selectedDesign = designSelect.value;
-  colorSelect.removeAttribute("disabled"); // Remove the 'disabled' attribute
+  colorSelect.removeAttribute("disabled"); 
 
   for (let i = 0; i < colorOptions.length; i++) {
     const option = colorOptions[i];
@@ -53,12 +53,11 @@ function updateColorOptions() {
 
     if (selectedDesign === optionTheme) {
       option.hidden = false;
-      option.selected = true;
     } else {
       option.hidden = true;
-      option.selected = false;
     }
   }
+  colorSelect.selectedIndex = 0; // Set the first option as selected
 }
 
 const designSelect = document.getElementById("design");
