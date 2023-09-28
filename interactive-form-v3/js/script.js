@@ -41,32 +41,22 @@ designSelect.addEventListener("change", function (event) {
 });
 
 const activitiesFieldset = document.getElementById("activities");
-const totalCostSpan = document.getElementById("totalCost");
+const totalCostSpan = document.getElementById("activities-cost");
 let totalCost = 0;
-
-console.log(activitiesFieldset);
-console.log(totalCostSpan);
-activitiesFieldset.addEventListener("change", function (event) {
-  const dataCost = +event.target.getAttribute("data-cost");
-  const isChecked = event.target.checked;
-
-  if (isChecked) {
-    totalCost += dataCost;
-  } else {
-    totalCost -= dataCost;
-  }
-
-  totalCostSpan.textContent = "$" + totalCost;
-});
 
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 checkboxes.forEach((checkbox) => {
-  const label = checkbox.parentElement;
-  checkbox.addEventListener("focus", () => {
-    label.classList.add("focus");
-  });
-  checkbox.addEventListener("blur", () => {
-    label.classList.remove("focus");
+  checkbox.addEventListener("change", function (event) {
+    const dataCost = +event.target.getAttribute("data-cost");
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      totalCost += dataCost;
+    } else {
+      totalCost -= dataCost;
+    }
+
+    totalCostSpan.textContent = `Total: $${totalCost}`;
   });
 });
 
