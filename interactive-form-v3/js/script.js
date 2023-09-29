@@ -1,3 +1,4 @@
+//All DOM elements listed below
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const jobRoleSelect = document.getElementById("title");
@@ -62,7 +63,7 @@ colorSelect.selectedIndex = 0;
 const designSelect = document.getElementById("design");
 const colorOptions = colorSelect.children;
 
-// Set the first option in the colorSelect as selected by default
+
 colorSelect.selectedIndex = 0;
 
 setOtherJobRoleVisibility();
@@ -196,7 +197,7 @@ form.addEventListener("submit", function (event) {
       const cvvValid = /^\d{3}$/.test(cvvInput.value);
   
       if (!ccNumValid || !zipValid || !cvvValid) {
-        event.preventDefault(); // Prevent form submission if credit card info is not valid
+        event.preventDefault(); 
         ccNumInput.parentElement.classList.add("not-valid");
         zipInput.parentElement.classList.add("not-valid");
         cvvInput.parentElement.classList.add("not-valid");
@@ -212,7 +213,7 @@ form.addEventListener("submit", function (event) {
       cvvInput.parentElement.classList.remove("not-valid", "valid");
     }
   
-    // Check if all required fields are valid for submission
+    // Will Check if all required fields are valid for submission
     const allValid = nameValid && emailValid && activitiesValid;
     if (!allValid) {
       event.preventDefault();
