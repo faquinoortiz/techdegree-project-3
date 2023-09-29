@@ -9,7 +9,7 @@ const creditCardDiv = document.getElementById("credit-card");
 const paypalDiv = document.getElementById("paypal");
 const bitcoinDiv = document.getElementById("bitcoin");
 const form = document.querySelector("form");
-const colorSelect = document.getElementById("color"); // Added this line
+const colorSelect = document.getElementById("color");
 
 // Will allow for the display of an element
 function showElement(element) {
@@ -45,7 +45,7 @@ function setPaymentSectionVisibility(selectedPayment) {
 // Updates and gives color options based on the design that is selected
 function updateColorOptions() {
   const selectedDesign = designSelect.value;
-  colorSelect.removeAttribute("disabled"); 
+  colorSelect.removeAttribute("disabled");
 
   for (let i = 0; i < colorOptions.length; i++) {
     const option = colorOptions[i];
@@ -57,7 +57,7 @@ function updateColorOptions() {
       option.hidden = true;
     }
   }
-  colorSelect.selectedIndex = 0; // Set the first option as selected
+  colorSelect.selectedIndex = 0;
 }
 
 const designSelect = document.getElementById("design");
@@ -95,7 +95,7 @@ function updateTotalCost() {
 }
 
 const totalCostDisplay = document.createElement("p");
-totalCostDisplay.textContent = "Total: $0"; // Initialize the total cost display
+totalCostDisplay.textContent = "Total: $0";
 activitiesFieldset.appendChild(totalCostDisplay);
 
 activitiesFieldset.addEventListener("change", updateTotalCost);
@@ -114,20 +114,26 @@ function validateCreditCard() {
 
   if (!ccNumValid) {
     ccNumInput.parentElement.classList.add("not-valid");
+    ccNumInput.parentElement.classList.remove("valid");
   } else {
     ccNumInput.parentElement.classList.remove("not-valid");
+    ccNumInput.parentElement.classList.add("valid");
   }
 
   if (!zipValid) {
     zipInput.parentElement.classList.add("not-valid");
+    zipInput.parentElement.classList.remove("valid");
   } else {
     zipInput.parentElement.classList.remove("not-valid");
+    zipInput.parentElement.classList.add("valid");
   }
 
   if (!cvvValid) {
     cvvInput.parentElement.classList.add("not-valid");
+    cvvInput.parentElement.classList.remove("valid");
   } else {
     cvvInput.parentElement.classList.remove("not-valid");
+    cvvInput.parentElement.classList.add("valid");
   }
 
   ccHint.style.display = ccNumValid ? "none" : "block";
@@ -158,31 +164,44 @@ form.addEventListener("submit", function (event) {
   const nameValid = /^[a-zA-Z\s]+$/.test(nameInput.value);
   if (!nameValid) {
     nameInput.parentElement.classList.add("not-valid");
+    nameInput.parentElement.classList.remove("valid");
   } else {
     nameInput.parentElement.classList.remove("not-valid");
+    nameInput.parentElement.classList.add("valid");
   }
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
   if (!emailValid) {
     emailInput.parentElement.classList.add("not-valid");
+    emailInput.parentElement.classList.remove("valid");
   } else {
     emailInput.parentElement.classList.remove("not-valid");
+    emailInput.parentElement.classList.add("valid");
   }
 
   const checkboxes = activitiesFieldset.querySelectorAll("input[type='checkbox']");
   const activitiesValid = Array.from(checkboxes).some((checkbox) => checkbox.checked);
   if (!activitiesValid) {
     activitiesFieldset.classList.add("not-valid");
+    activitiesFieldset.classList.remove("valid");
   } else {
     activitiesFieldset.classList.remove("not-valid");
+    activitiesFieldset.classList.add("valid");
   }
  
-  // Validate credit card fields
+  // Validate credit card fields only if the payment method is "credit-card"
   if (paymentSelect.value === "credit-card") {
     validateCreditCard();
+  } else {
+    // If the payment method is not "credit-card", remove any validation classes
+    ccNumInput.parentElement.classList.remove("not-valid", "valid");
+    zipInput.parentElement.classList.remove("not-valid", "valid");
+    cvvInput.parentElement.classList.remove("not-valid", "valid");
   }
 
-  if (!nameValid || !emailValid || !activitiesValid || paymentSelect.value === "select method") {
+  // Check if all required fields are valid for submission
+  const allValid = nameValid && emailValid && activitiesValid;
+  if (!allValid) {
     event.preventDefault();
   }
 });
