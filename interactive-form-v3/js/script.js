@@ -83,7 +83,7 @@ let totalCost = 0;
 // Updates the cost every time a different activity is selected
 function updateTotalCost() {
 const checkboxes = activitiesFieldset.querySelectorAll("input[type='checkbox']");
-totalCost = 0;
+//totalCost = 0;
 
 checkboxes.forEach((checkbox) => {
 if (checkbox.checked) {
@@ -119,7 +119,7 @@ ccNumInput.parentElement.classList.remove("valid");
 ccNumInput.parentElement.classList.remove("not-valid");
 ccNumInput.parentElement.classList.add("valid");
 }
-
+//Will allow for Zip Validation based on the input of the participant
 if (!zipValid) {
 zipInput.parentElement.classList.add("not-valid");
 zipInput.parentElement.classList.remove("valid");
@@ -127,7 +127,7 @@ zipInput.parentElement.classList.remove("valid");
 zipInput.parentElement.classList.remove("not-valid");
 zipInput.parentElement.classList.add("valid");
 }
-
+//Allows for credit card validation, if information is not inputted correctly it won't be submitted
 if (!cvvValid) {
 cvvInput.parentElement.classList.add("not-valid");
 cvvInput.parentElement.classList.remove("valid");
@@ -159,7 +159,7 @@ label.classList.remove("focus");
 });
 });
 
-// Event Listener for submission
+
 // Event Listener for submission
 form.addEventListener("submit", function (event) {
     const nameValid = /^[a-zA-Z\s]+$/.test(nameInput.value);
